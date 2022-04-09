@@ -4,8 +4,8 @@ import time
 from raidbot.database import get_player, get_player_by_id, get_player_by_name
 
 TANKS = ["WAR", "PLD", "DRK", "GNB"]
-HEALERS = ["WHM", "SCH", "AST"]
-MELEES = ["MNK", "DRG", "NIN", "SAM"]
+HEALERS = ["WHM", "SCH", "AST", "SGE"]
+MELEES = ["MNK", "DRG", "NIN", "SAM", "RPR"]
 RANGED = ["BRD", "MCH", "DNC"]
 CASTERS = ["BLM", "SMN", "RDM"]
 LIMITED = ["BLU"]
