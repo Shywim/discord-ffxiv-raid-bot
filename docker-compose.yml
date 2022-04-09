@@ -4,5 +4,7 @@ services:
     image: shywim/ffxiv-raid-bot
     volumes:
       - database:/app/database
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
 volumes:
   database: {}
