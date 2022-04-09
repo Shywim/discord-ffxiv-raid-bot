@@ -2,6 +2,8 @@ version: "3.9"
 services:
   app:
     image: shywim/ffxiv-raid-bot
+    build:
+      context: .
     volumes:
       - database:/app/database
     environment:

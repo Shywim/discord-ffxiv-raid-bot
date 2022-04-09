@@ -131,7 +131,7 @@ def make_event_embed(ev: Event, guild, add_legend=False):
     embed.add_field(name="**Time**", value=f"{ev.get_discord_time_format()} -> [Countdown]"
                                            f"({build_countdown_link(ev.timestamp)})", inline=False)
 
-    signed_str, bench_str = ev.signed_in_and_benched_as_strs()
+    signed_str, bench_str = ev.signed_in_and_benched_as_strs(guild.id)
     if signed_str:
         embed.add_field(name="**Participants**", value=signed_str, inline=False)
     if bench_str:

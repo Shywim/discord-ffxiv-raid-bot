@@ -2,8 +2,9 @@ from datetime import datetime
 from pytz import timezone
 from pytz.exceptions import UnknownTimeZoneError
 
-from raidbot.raidbuilder import job_string_to_list, string_from_list
+from raidbot.raidbuilder import job_string_to_list, string_from_list, make_character_from_db
 from raidbot.database import get_event, create_connection
+from raidbot.emoji_dict import emoji_dict
 
 
 class Event:
@@ -75,15 +76,24 @@ class Event:
     def participants_as_str(self):
         return string_from_list(self.participant_names)
 
-    def signed_in_and_benched_as_strs(self):
+    def jobs_as_emojis(self, conn, participant_name: str, participant_id: int):
+        participant, _, _ = make_character_from_db(conn, participant_id, participant_name)
+        emojis = ""
+        for job in participant.jobs:
+            emojis += emoji_dict[job]
+        return emojis
+
+    def signed_in_and_benched_as_strs(self, guild_id: str):
+        conn = create_connection(guild_id)
         signed = ""
         benched = ""
         for i in range(len(self.participant_names)):
+            s = self.participant_names[i] + " " + self.jobs_as_emojis(conn, self.participant_names[i], self.participant_ids[i]) + "\u200B"
             if self.is_bench[i]:
-                benched += self.participant_names[i] + ", "
+                benched += s
             else:
-                signed += self.participant_names[i] + ", "
-        return signed[:-2], benched[:-2]
+                signed += s
+        return signed[:-1], benched[:-1]
 
     def jobs_as_str(self):
         return string_from_list(self.jobs)
